@@ -1,0 +1,39 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Student List
+    link(rel="stylesheet", href="/stylesheets/style.css")
+  body 
+    h4 
+      a.create-new(href='/student/create') Create New
+    form.search-form(action="/student/search")
+      label(for='keyword') Name 
+      input(name='keyword', id='keyword')
+      input(type='submit', value='Search')
+    h1 Student List
+    table 
+      thead 
+        tr 
+          th Name 
+          th Age 
+          th Email 
+          th Bio 
+          th Photo
+          th Actions
+      tbody 
+        if students != null && students.length > 0 
+          each item in students
+            tr 
+              td=item.name 
+              td=item.age
+              td=item.email
+              td=item.bio
+              td
+                img(src=`/images/${item.photoUrl}`, alt=item.name, style='width: 200px; height:auto;') 
+              td 
+                a(href=`/student/update/${item._id}`) Update
+        else
+          tr 
+            td(colspan='6') No Students

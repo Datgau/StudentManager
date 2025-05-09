@@ -1,0 +1,56 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Update Student
+    link(rel="stylesheet", href="/stylesheets/style.css")
+  body 
+    h1 Update Student
+    if errors 
+      div
+        ul 
+          each err in errors 
+            li=err.msg 
+    form(action=`/student/update/${student._id}`, method='post', enctype='multipart/form-data')
+      input(type="hidden", name="id", value=student._id)
+      div.form-group
+        label(for='name') Name
+        input(type='text', name='name', id='name', value=student.name, placeholder='Enter student name')
+        if errors 
+          each err in errors 
+            if err.path=='name'
+              span.error=err.msg
+      div.form-group
+        label(for='age') Age
+        input(name='age', id='age', type='number', value=student.age)
+        if errors 
+          each err in errors 
+            if err.path=='age'
+              span.error=err.msg
+      div.form-group
+        label(for='email') Email
+        input(name='email', id='email', type='email', value=student.email)
+        if errors 
+          each err in errors 
+            if err.path=='email'
+              span.error=err.msg
+      div.form-group
+        label(for='bio') Bio
+        textarea(name='bio', id='bio', rows='4')=student.bio
+        if errors 
+          each err in errors 
+            if err.path=='bio'
+              span.error=err.msg
+      if student.photoUrl!=null && student.photoUrl.length > 0
+        div 
+          img(src=`/images/${student.photoUrl}`, style='width:400px;height:auto;')
+      div.form-group
+        label(for='image') Image
+        input(name='image', id='image', type='file')
+        if errors 
+          each err in errors 
+            if err.path=='image'
+              span.error=err.msg
+      div 
+        input(type='submit' value='Update')
